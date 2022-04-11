@@ -2,7 +2,7 @@
 
 ## Summary
 
-Shopify uses an authentication flow called Multipass for shop customers' SSO. The idea behind it is you use whatever Identity Provider you want, in this case forgerock, and then send an encrypted and signed base64 encoded JSON token with that user information. More details <a href="https://shopify.dev/api/multipass" target="_blank">here</a>
+Shopify uses an authentication flow called Multipass for shop customers' SSO. The idea behind it is you use whatever Identity Provider you want, in this case forgerock, and then send an encrypted and signed base64 encoded JSON token with that user information. More details [here](https://shopify.dev/api/multipass)
 
 ## Setup
 
