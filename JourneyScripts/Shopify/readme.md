@@ -1,4 +1,4 @@
-# Shopify Multipass SSO Scripted Decision Node
+# Shopify Multipass SSO Scripted Decision Node (Not supported in IDC yet)
 
 ## Summary
 
