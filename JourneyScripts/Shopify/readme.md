@@ -42,7 +42,6 @@ We need to whitelist the following classes in Forgerock Access Management
   java.lang.String
   java.security.SecureRandom
   javax.crypto.spec.IvParameterSpec
-  java.util.Arrays
   java.io.ByteArrayOutputStream
   org.forgerock.util.encode.Base64
   ```

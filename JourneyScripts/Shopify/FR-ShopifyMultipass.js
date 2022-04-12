@@ -14,7 +14,6 @@
     java.lang.String,
     java.security.SecureRandom,
     javax.crypto.spec.IvParameterSpec,
-    java.util.Arrays,
     java.io.ByteArrayOutputStream,
     org.forgerock.util.encode.Base64
   );
@@ -35,8 +34,8 @@
   //Derive the Encryption and Signing keys
   var md = fr.MessageDigest.getInstance('SHA-256');
   var hash = md.digest(new fr.String(multipassSecret).getBytes('UTF-8'));
-  var encryptionKey = fr.Arrays.copyOfRange(hash, 0, 16);
-  var signatureKey = fr.Arrays.copyOfRange(hash, 16, 32);
+  var encryptionKey = hash.slice(0, 16)
+  var signatureKey = hash.slice(16, 32)
 
   //Encrypt the JSON string and create the cipher text, then add the IV and the cipher text to a byte array
   var secureRandom = new fr.SecureRandom();
