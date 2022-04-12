@@ -80,11 +80,8 @@
 
   //base64 encode the byte array, and remove non url safe symbols
   var base64Token = fr.Base64.encode(byteArray.toByteArray());
-  var urlToken = base64Token.replace(/\+/g, '-').replace(/\//g, '_');
-  sharedState.put(
-    'successUrl',
-    'https://' + shopifyDomain + '/account/login/multipass/' + urlToken
-  );
+  var urlToken = String(base64Token).replace(/\+/g, '-').replace(/\//g, '_');
+  sharedState.put('successUrl', 'https://' + shopifyDomain + '/account/login/multipass/' + urlToken);
 
   outcome = 'true';
 })();
