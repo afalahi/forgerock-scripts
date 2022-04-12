@@ -35,13 +35,16 @@
     email: String(idRepository.getAttribute(sharedState.get('username'), 'mail').toArray()[0]),
     created_at: new Date().toISOString()
   };
+  if(requestParameters.get('return_to') && String(requestParameters.get('return_to').get(0))) {
+    shopifyToken['return_to']= String(requestParameters.get('return_to').get(0));
+  }
   var jsonToken = JSON.stringify(shopifyToken);
 
   //Derive the Encryption and Signing keys
   var md = fr.MessageDigest.getInstance('SHA-256');
   var hash = md.digest(new fr.String(multipassSecret).getBytes('UTF-8'));
-  var encryptionKey = hash.slice(0, 16)
-  var signatureKey = hash.slice(16, 32)
+  var encryptionKey = hash.slice(0, 16);
+  var signatureKey = hash.slice(16, 32);
 
   //Encrypt the JSON string and create the cipher text, then add the IV and the cipher text to a byte array
   var secureRandom = new fr.SecureRandom();

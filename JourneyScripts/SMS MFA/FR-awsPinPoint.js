@@ -1,6 +1,6 @@
 /* AWS Pinpoint SMS OTP Sender
  *
- * Author: chico.demetroff@forgerock.com
+ * Author: ali.falahi@forgerock.com
  *
  * This script will send an SMS containing the OTP to the phone number in the user's profile, 
  * or if configured via the Journey you can ask for a phone number and  retry.
@@ -54,12 +54,12 @@
           accessKey: systemEnv.getProperty('esv.aws.key'),
           secretKey: systemEnv.getProperty('esv.aws.secret'),
           region: systemEnv.getProperty('esv.aws.region'),
-          projectId: systemEnv.getProperty('esv.aws.projectId'),
+          projectId: systemEnv.getProperty('esv.aws.project.id'),
           httpMethod: 'POST',
           contentType: 'application/json',
-          path: '/v1/apps/8d8bddc0310d4d918c9fba704c9bd3b7/messages',
+          get path () {return '/v1/apps' + this.projectId + '/messages'},
           get host() { return 'pinpoint.' + this.region + '.amazonaws.com'},
-          get endpoint() {return 'https://pinpoint.' + this.region + '.amazonaws.com/' + this.path;},
+          get endpoint() {return 'https://pinpoint.' + this.region + '.amazonaws.com' + this.path;},
           amzDate: function () {
               return getAmzDate(new Date().toISOString());
           },
