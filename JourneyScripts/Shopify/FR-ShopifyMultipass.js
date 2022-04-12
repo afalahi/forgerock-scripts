@@ -3,7 +3,13 @@
  * Credits: https://community.shopify.com/c/shopify-apis-and-sdks/multipass-integration-token-generation-in-java/td-p/197796
  * The script utilizes Shopify Multipass to log users to a Shopify store using ForgeRock's established sessions/registrations
  * This script was tested on AM 7.1 and will not work in identity cloud until the classes are whitelisted
- * output = false
+ * output = true
+ * 
+ * DISCLAIMER: This code is provided to you expressly as an example  (“Sample Code”). 
+ * It is the responsibility of the individual recipient user, in his/her sole discretion, to diligence such Sample Code for accuracy, completeness, security, and final determination for appropriateness of use.
+ * ANY SAMPLE CODE IS PROVIDED ON AN “AS IS” IS BASIS, WITHOUT WARRANTY OF ANY KIND. 
+ * FORGEROCK AND ITS LICENSORS EXPRESSLY DISCLAIM ALL WARRANTIES,  WHETHER EXPRESS, IMPLIED, OR STATUTORY, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES  OF MERCHANTABILITY, OR FITNESS FOR A PARTICULAR PURPOSE.
+ * FORGEROCK SHALL NOT HAVE ANY LIABILITY ARISING OUT OF OR RELATING TO ANY USE, IMPLEMENTATION, INTEGRATION, OR CONFIGURATION OF ANY SAMPLE CODE IN ANY PRODUCTION ENVIRONMENT OR FOR ANY COMMERCIAL DEPLOYMENT(S).
  */
 (function () {
   var fr = JavaImporter(
