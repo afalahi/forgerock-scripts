@@ -67,7 +67,7 @@
               return this.amzDate().split('T')[0];
           },
       };
-​
+
       // AWS Req parameters and a not hashed payload with url encoding. This payload will be hashed and sent as part of our request
       var payload = {
           'MessageConfiguration': {
@@ -79,7 +79,7 @@
               }
           },
           'Addresses': {
-​
+
           }
       };
      //add the dynamic phonenumber in
@@ -137,9 +137,9 @@
       });
       request.getEntity().setString(JSON.stringify(payload));
       var response = httpClient.send(request).get();
-​
+
       var result = response.getEntity().getString();
-​
+
       sharedState.put('Response Code', response.getStatus().getCode());
       sharedState.put('Response Message', result);
       if (response.getStatus().getCode() === 200) {
@@ -151,7 +151,6 @@
        logger.error('AWS PinPoint SMS OTP Sender: Result = '+ result);
       }
   }
-​
   /**
    * Functions
    */
