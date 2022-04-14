@@ -129,3 +129,5 @@ dist
 package.json
 package-lock.json
 tests.js
+samlAttributeMapper.js
+mapCustomAttributes.js

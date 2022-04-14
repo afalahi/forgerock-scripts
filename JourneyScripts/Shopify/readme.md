@@ -45,7 +45,7 @@ You'll need a Shopify dev account to test this flow.
 
 #### Theme
 
-We need to edit our Shopify theme and add our Forgerock configurations as well as edit the theme to redirect to Forgerock, and logout of Forgerock and Shopify in one swoop
+We need to edit our Shopify theme and have it redirect to Forgerock for login and logout
 
 While still in your store as admin:
 
@@ -58,7 +58,7 @@ While still in your store as admin:
 - Once you're in code mode click on **settings_schema.json**
 
   ![edit-theme-config](/JourneyScripts/Shopify/imgs/store-theme-config.png)
-- Add the following code snippet to the bottom of the file. **Keep in mind this is a JSON array, so make sure to add it in side the array and don't forget the comma**
+- Add the following code snippet to the bottom of the file. **Keep in mind this is a JSON array, so make sure to add it to the array and don't forget the comma**
 
   ```json
     {
