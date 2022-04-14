@@ -160,14 +160,18 @@ We'll need to create a script in Forgerock AM that will handle the encryption an
 - Create a new Script
   - Scripts > New Script > `Name` the script "ShopifyMultipass" and Select Decision node script for authentication trees as `type`
   - Click create and pase your script, make sure the `Language` is JavaScript
-- Create a new Tree that will log the user in and redirect to Shopify
-  - Authentication > Trees > Create Tree
-    - Name: Shopify_MultiPass
-    - Add `Username Collector` Node or `Platform Username` node. This depends on your deployment
-    - Add `Password Collector` Node or `Platform Password` Node. This depends on your deployment
-    - Add `Scripted Decision` Node and choose our newly created Script
-      - Change the Node name to `Shopify Multipass Script`
-      - Add `true` in the Outcomes field
-  - Connect all Nodes as follows
+
+#### Tree
+
+Create a new Tree that will log the user in and redirect to Shopify
+
+- Authentication > Trees > Create Tree
+  - Name: Shopify_MultiPass
+  - Add `Username Collector` Node or `Platform Username` node. This depends on your deployment
+  - Add `Password Collector` Node or `Platform Password` Node. This depends on your deployment
+  - Add `Scripted Decision` Node and choose our newly created Script
+    - Change the Node name to `Shopify Multipass Script`
+    - Add `true` in the Outcomes field
+- Connect all Nodes as follows
   
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/journey-view.png)
