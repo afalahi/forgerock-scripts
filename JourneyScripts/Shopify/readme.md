@@ -17,32 +17,32 @@ You'll need a Shopify dev account to test this flow.
   - From your Partner dashboard click Stores
   - Click Add store
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/add-store.png)
+    ![add-store](/JourneyScripts/Shopify/imgs/add-store.png)
   - Select Development Store for Store Type
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-type.png)
+    ![store-type](/JourneyScripts/Shopify/imgs/store-type.png)
   - Enter a name for your store and password. Development stores have passwords
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-details.png)
+    ![store-details](/JourneyScripts/Shopify/imgs/store-details.png)
   - You may need to enter an address for the store, so do so
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-address.png)
+    ![store-address](/JourneyScripts/Shopify/imgs/store-address.png)
   - Save
     - if you need to change the store passwords then follow these [steps](https://help.shopify.com/en/partners/dashboard/managing-stores/development-stores#viewing-or-setting-the-password)
 - in your newly created store, we now need to enable Multipass
   - Login to your store
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-login.png)
+    ![store-login](/JourneyScripts/Shopify/imgs/store-login.png)
   - Click settings in left hand corner
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-settings.png)
+    ![store-settings](/JourneyScripts/Shopify/imgs/store-settings.png)
   - Click checkout and from customer accounts choose accounts optional or required
   - Click on enable Multipass
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-enable-multipass.png)
+    ![enable-multipass](/JourneyScripts/Shopify/imgs/store-enable-multipass.png)
   - Copy your multipass secret. `DO NOT COMMIT THIS SECRET IN YOUR CODE`
 
-    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-multipass.png)
+    ![copy-multipass](/JourneyScripts/Shopify/imgs/store-multipass.png)
 
 #### Theme
 
@@ -52,13 +52,13 @@ While still in your store as admin:
 
 - Click Themes
 
-  ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-themes.png)
+  ![store-themes](/JourneyScripts/Shopify/imgs/store-themes.png)
 - Click Actions, and from the dropdown menu click `Edit Code`
 
-  ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-theme-code.png)
+  ![edit-theme-code](/JourneyScripts/Shopify/imgs/store-theme-code.png)
 - Once you're in code mode click on `settings_schema.json`
 
-  ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-theme-config.png)
+  ![edit-theme-config](/JourneyScripts/Shopify/imgs/store-theme-config.png)
 - Add the following code snippet to the bottom of the file. **Keep in mind this is a JSON array, so make sure to add it in side the array and don't forget the comma**
 
   ```json
@@ -83,27 +83,50 @@ While still in your store as admin:
 
 - Once you added the settings, locate the `customers/login.liquid` template.
 
-  ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-login-template.png)
-- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`
+  ![shopify-login-template](/JourneyScripts/Shopify/imgs/store-login-template.png)
+- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This will check if a user is not logged in and redirect the user to forgerock
 
   ```liquid
   {% if customer.id == null %}
   <script>window.location.href="{{ settings.forgerock_login_url }}"</script>
   {% endif %}
   ```
+  
+  ![shopify-login-link](/JourneyScripts/Shopify/imgs/store-login-link.png)
 
-  - `YOUR_FORGEROCK_HOSTNAME` = Whatever hostname you gave your deployment. My path has `/openam` in it, yours maybe different. You could be using a fully custom UI as well
-  - `YOUR_TREE_NAME` = Whatever you decided to call your AM tree/journey
-  - `YOUR_RETURN_TO_URL` = This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. It will redirect the user back to a specific page in Shopify. 
-    - *This is set as a static value in this example implementation, but can be dynamic with JS manipulation on the Shopify side. This will not be covered here*
+- Locate the `customers/account.liquid` template
 
-```liquid
-<a href="{{ settings.forgerock_logout_url }}">
+  ![shopify-account-template](/JourneyScripts/Shopify/imgs/store-account-template.png)
+- Replace `{{ routes.account_logout_url }}` with our logout url
+
+  ```liquid
+  <a href="{{ settings.forgerock_logout_url }}">
+  ```
+
+  ![shopify-logout-link](/JourneyScripts/Shopify/imgs/store-logout-link.png)
+
+#### Construct Your Urls
+
+We've created a new config object in Shopify with two properties; `forgerock_login_url` and `forgerock_logout_url`. These two properties are key value pairs, and will hold values for our login and logout urls.
+
+##### Login Url
+
+  ```consol
+  https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=Shopify_MultiPass&return_to=YOUR_RETURN_TO_URL&ForceAuth=true#login
+  ```
+
+We're using `ForceAuth=true` to ensure that a user with a session will not be redirect to their dashboard and instead go through the journey so the script executes
+
+##### Logout Url
+
+```console
+https://YOUR_FORGEROCK_HOSTNAM/openam/XUI?goto=https://forgerock-poc.myshopify.com/account/logout#logout
 ```
 
-```markdown
-https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=YOUR_TREE_NAME&return_to=YOUT_RETURN_TO_URL&ForceAuth=true#login
-```
+- `YOUR_FORGEROCK_HOSTNAME` = Whatever hostname you gave your deployment. My path has `/openam` in it, yours maybe different. You could be using a fully custom UI as well
+- `YOUR_RETURN_TO_URL` = `https://your-shopify-domain/path`
+  - This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. The script will add it to the encrypted JSON token so Shopify can redirect the user back to a specific page, like the cart page.
+  - *This is set as a static value in this example implementation, but can be dynamic with JS manipulation on the Shopify side. That will not be covered here*
 
 ### Forgerock Setup
 
@@ -127,7 +150,7 @@ We need to whitelist the following classes in Forgerock Access Management
   org.forgerock.util.encode.Base64
   ```
 
-You may need to add these classes one by one and don't forget to save
+You may need to add these classes one by one and don't forget to save. Once added you need to restart the AM instance
 
 #### Script Configuration
 
