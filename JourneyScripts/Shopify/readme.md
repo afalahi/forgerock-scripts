@@ -152,7 +152,7 @@ We're using `ForceAuth=true` to ensure that a user with a session will not be re
 ##### Logout Url
 
 ```console
-https://YOUR_FORGEROCK_HOSTNAM/openam/XUI?goto=https://forgerock-poc.myshopify.com/account/logout#logout
+https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?goto=https://forgerock-poc.myshopify.com/account/logout#logout
 ```
 
 - `YOUR_FORGEROCK_HOSTNAME` = Whatever hostname you gave your deployment. My path has `/openam` in it, yours maybe different. You could be using a fully custom UI as well
