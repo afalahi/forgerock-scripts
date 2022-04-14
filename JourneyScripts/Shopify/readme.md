@@ -53,10 +53,10 @@ While still in your store as admin:
 - Click Themes
 
   ![store-themes](/JourneyScripts/Shopify/imgs/store-themes.png)
-- Click Actions, and from the dropdown menu click `Edit Code`
+- Click Actions, and from the dropdown menu click **Edit Code**
 
   ![edit-theme-code](/JourneyScripts/Shopify/imgs/store-theme-code.png)
-- Once you're in code mode click on `settings_schema.json`
+- Once you're in code mode click on **settings_schema.json**
 
   ![edit-theme-config](/JourneyScripts/Shopify/imgs/store-theme-config.png)
 - Add the following code snippet to the bottom of the file. **Keep in mind this is a JSON array, so make sure to add it in side the array and don't forget the comma**
@@ -81,7 +81,7 @@ While still in your store as admin:
     }
   ```
 
-- Once you added the settings, locate the `customers/login.liquid` template.
+- Once you added the settings, locate the **customers/login.liquid** template.
 
   ![shopify-login-template](/JourneyScripts/Shopify/imgs/store-login-template.png)
 - Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This will check if a user is not logged in and redirect the user to forgerock
@@ -94,7 +94,7 @@ While still in your store as admin:
   
   ![shopify-login-link](/JourneyScripts/Shopify/imgs/store-login-link.png)
 
-- Locate the `customers/account.liquid` template
+- Locate the **customers/account.liquid** template
 
   ![shopify-account-template](/JourneyScripts/Shopify/imgs/store-account-template.png)
 - Replace `{{ routes.account_logout_url }}` with our logout url
@@ -128,14 +128,34 @@ https://YOUR_FORGEROCK_HOSTNAM/openam/XUI?goto=https://forgerock-poc.myshopify.c
   - This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. The script will add it to the encrypted JSON token so Shopify can redirect the user back to a specific page, like the cart page.
   - *This is set as a static value in this example implementation, but can be dynamic with JS manipulation on the Shopify side. That will not be covered here*
 
+#### Add Urls in Shopify
+
+Once you've figured out your URLs based on the above formula, you'll need to add them in our Shopify configuration object we created earlier.
+
+While logged in to your store:
+
+- Click themes
+
+  ![store-themes](/JourneyScripts/Shopify/imgs/store-themes.png)
+- Click **Customize**
+
+  ![customize-theme](/JourneyScripts/Shopify/imgs/store-theme-customize.png)
+- Click `Theme Settings` at the left hand corner
+
+  ![theme-settings](/JourneyScripts/Shopify/imgs/store-theme-settings.png)
+- You'll see a navigation menu open to the right, Click on **Forgerock Config**
+
+  ![store-themes](/JourneyScripts/Shopify/imgs/store-theme-forgerock.png)
+- Add your **Login** and **Logout** Urls and click **save**
+
 ### Forgerock Setup
 
 #### Whitelist the Java classes
 
 We need to whitelist the following classes in Forgerock Access Management
 
-- Click to the target realm and click on `Configure` in the header menu > `Global Services`
-- Scroll down and click on `Scripting` > `Secondary Configurations` > `AUTHENTICATION_TREE_DECISION_NODE` > `Secondary Configurations` > `engineConfiguration`
+- Click to the target realm and click on **Configure** in the header menu > **Global Services**
+- Scroll down and click on **Scripting** > **Secondary Configurations** > `AUTHENTICATION_TREE_DECISION_NODE` > **Secondary Configurations** > **engineConfiguration**
 - Add the following Java classes
 
   ```js
@@ -158,19 +178,19 @@ We'll need to create a script in Forgerock AM that will handle the encryption an
 
 - Copy the [script](/JourneyScripts/Shopify/FR-ShopifyMultipass.js) from this repo
 - Create a new Script
-  - Scripts > New Script > `Name` the script "ShopifyMultipass" and Select Decision node script for authentication trees as `type`
-  - Click create and pase your script, make sure the `Language` is JavaScript
+  - Scripts > New Script > **Name** the script **ShopifyMultipass** and Select **Decision node script for authentication trees** as type
+  - Click create and pase your script, make sure the Language is **JavaScript**
 
 #### Tree
 
 Create a new Tree that will log the user in and redirect to Shopify
 
-- Authentication > Trees > Create Tree
-  - Name: Shopify_MultiPass
+- **Authentication** > **Trees** > **Create Tree**
+  - Name: **Shopify_MultiPass**
   - Add `Username Collector` Node or `Platform Username` node. This depends on your deployment
   - Add `Password Collector` Node or `Platform Password` Node. This depends on your deployment
   - Add `Scripted Decision` Node and choose our newly created Script
-    - Change the Node name to `Shopify Multipass Script`
+    - Change the Node name to **Shopify Multipass**
     - Add `true` in the Outcomes field
 - Connect all Nodes as follows
   
