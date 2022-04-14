@@ -40,7 +40,7 @@ You'll need a Shopify dev account to test this flow.
   - Click on enable Multipass
 
     ![enable-multipass](/JourneyScripts/Shopify/imgs/store-enable-multipass.png)
-  - Copy your multipass secret. `DO NOT COMMIT THIS SECRET IN YOUR CODE`
+  - **DO NOT COMMIT THIS SECRET IN YOUR CODE**
 
     ![copy-multipass](/JourneyScripts/Shopify/imgs/store-multipass.png)
 
@@ -176,14 +176,20 @@ You may need to add these classes one by one and don't forget to save. Once adde
 
 We'll need to create a script in Forgerock AM that will handle the encryption and signing of the Shopify payload and redirect users to their account page.
 
-- Copy the [script](/JourneyScripts/Shopify/FR-ShopifyMultipass.js) from this repo
-- Create a new Script
-  - Scripts > New Script > **Name** the script **ShopifyMultipass** and Select **Decision node script for authentication trees** as type
-  - Click create and pase your script, make sure the Language is **JavaScript**
+- Copy the [script](/JourneyScripts/Shopify/FR-ShopifyMultipass.js)
+- In your realm of choice create a new Script
+  - **Scripts** > **New Script** > **Name** the script **ShopifyMultipass** and Select **Decision node script for authentication trees** as type
+  - Click create and paste your script, make sure the Language is **JavaScript**
+  - Update lines 29 and 30 with your Multipass Secret and your Shopify Domain name
+
+    ```js
+      var multipassSecret = 'YOUR_MULTIPASS_SECRET'; //Copy from your shopify store
+      var shopifyDomain = 'YOUR.SHOPIFY.DOMAIN'; //Example: forgerock-poc.myshopify.com
+    ```
 
 #### Tree
 
-Create a new Tree that will log the user in and redirect to Shopify
+Create a new Tree in your realm of choice
 
 - **Authentication** > **Trees** > **Create Tree**
   - Name: **Shopify_MultiPass**
