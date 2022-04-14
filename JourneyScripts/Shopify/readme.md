@@ -152,7 +152,7 @@ We need to whitelist the following classes in Forgerock Access Management
 
 You may need to add these classes one by one and don't forget to save. Once added you need to restart the AM instance
 
-#### Script Configuration
+#### Script
 
 We'll need to create a script in Forgerock AM that will handle the encryption and signing of the Shopify payload and redirect users to their account page.
 
@@ -164,9 +164,10 @@ We'll need to create a script in Forgerock AM that will handle the encryption an
   - Authentication > Trees > Create Tree
     - Name: Shopify_MultiPass
     - Add `Username Collector` Node or `Platform Username` node. This depends on your deployment
+    - Add `Password Collector` Node or `Platform Password` Node. This depends on your deployment
     - Add `Scripted Decision` Node and choose our newly created Script
       - Change the Node name to `Shopify Multipass Script`
       - Add `true` in the Outcomes field
   - Connect all Nodes as follows
   
-  ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/journey-view.png)
+    ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/journey-view.png)
