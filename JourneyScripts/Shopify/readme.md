@@ -111,7 +111,7 @@ We've created a new config object in Shopify with two properties; `forgerock_log
 
 ##### Login Url
 
-  ```consol
+  ```console
   https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=Shopify_MultiPass&return_to=YOUR_RETURN_TO_URL&ForceAuth=true#login
   ```
 
