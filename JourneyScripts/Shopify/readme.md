@@ -101,7 +101,7 @@ While still in your store as admin:
 <a href="{{ settings.forgerock_logout_url }}">
 ```
 
-```http
+```markdown
 https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=YOUR_TREE_NAME&return_to=YOUT_RETURN_TO_URL&ForceAuth=true#login
 ```
 
@@ -115,7 +115,7 @@ We need to whitelist the following classes in Forgerock Access Management
 - Scroll down and click on `Scripting` > `Secondary Configurations` > `AUTHENTICATION_TREE_DECISION_NODE` > `Secondary Configurations` > `engineConfiguration`
 - Add the following Java classes
 
-  ```java
+  ```js
   javax.crypto.Cipher
   javax.crypto.Mac
   javax.crypto.spec.SecretKeySpec
