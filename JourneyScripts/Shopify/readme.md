@@ -2,7 +2,7 @@
 
 ## Summary
 
-Shopify uses an authentication flow called Multipass for shop customers' SSO. The idea behind it is you use whatever Identity Provider you want, in this case forgerock, and then send an encrypted and signed base64 encoded JSON token with that user information. More details [here](https://shopify.dev/api/multipass)
+Shopify uses an authentication flow called Multipass for shop customers' SSO. The idea behind it is you use whatever Identity Provider you want, in this case Forgerock, and then send an encrypted and signed base64 encoded JSON token with that user information. More details [here](https://shopify.dev/api/multipass)
 
 ## Setup
 
@@ -40,7 +40,6 @@ You'll need a Shopify dev account to test this flow.
   - Click on enable Multipass
 
     ![enable-multipass](/JourneyScripts/Shopify/imgs/store-enable-multipass.png)
-  - **DO NOT COMMIT THIS SECRET IN YOUR CODE**
 
     ![copy-multipass](/JourneyScripts/Shopify/imgs/store-multipass.png)
 
@@ -84,7 +83,7 @@ While still in your store as admin:
 - Once you added the settings, locate the **customers/login.liquid** template.
 
   ![shopify-login-template](/JourneyScripts/Shopify/imgs/store-login-template.png)
-- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This will check if a user is not logged in and redirect the user to forgerock
+- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This will check if a user is not logged in and redirect the user to Forgerock
 
   ```liquid
   {% if customer.id == null %}
@@ -115,7 +114,7 @@ We've created a new config object in Shopify with two properties; `forgerock_log
   https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=Shopify_MultiPass&return_to=YOUR_RETURN_TO_URL&ForceAuth=true#login
   ```
 
-We're using `ForceAuth=true` to ensure that a user with a session will not be redirect to their dashboard and instead go through the journey so the script executes
+We're using `ForceAuth=true` to ensure that a user with a session will not be redirected to their dashboard and instead go through the journey so the script executes
 
 ##### Logout Url
 
