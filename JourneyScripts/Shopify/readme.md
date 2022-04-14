@@ -16,24 +16,32 @@ You'll need a Shopify dev account to test this flow.
 - Once created and logged in you'll need to create a development store
   - From your Partner dashboard click Stores
   - Click Add store
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/add-store.png)
   - Select Development Store for Store Type
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-type.png)
   - Enter a name for your store and password. Development stores have passwords
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-details.png)
   - You may need to enter an address for the store, so do so
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-address.png)
   - Save
     - if you need to change the store passwords then follow these [steps](https://help.shopify.com/en/partners/dashboard/managing-stores/development-stores#viewing-or-setting-the-password)
 - in your newly created store, we now need to enable Multipass
   - Login to your store
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-login.png)
   - Click settings in left hand corner
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-settings.png)
   - Click checkout and from customer accounts choose accounts optional or required
   - Click on enable Multipass
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-enable-multipass.png)
   - Copy your multipass secret. `DO NOT COMMIT THIS SECRET IN YOUR CODE`
+
     ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-multipass.png)
 
 #### Theme
@@ -43,10 +51,13 @@ We need to edit our Shopify theme and add our Forgerock configurations as well a
 While still in your store as admin:
 
 - Click Themes
+
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-themes.png)
 - Click Actions, and from the dropdown menu click `Edit Code`
+
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-theme-code.png)
 - Once you're in code mode click on `settings_schema.json`
+
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-theme-config.png)
 - Add the following code snippet to the bottom of the file. **Keep in mind this is a JSON array, so make sure to add it in side the array and don't forget the comma**
 
@@ -71,6 +82,7 @@ While still in your store as admin:
   ```
 
 - Once you added the settings, locate the `customers/login.liquid` template.
+
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/store-login-template.png)
 - Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`
 
@@ -85,11 +97,11 @@ While still in your store as admin:
   - `YOUR_RETURN_TO_URL` = This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. It will redirect the user back to a specific page in Shopify. 
     - *This is set as a static value in this example implementation, but can be dynamic with JS manipulation on the Shopify side. This will not be covered here*
 
-```html
+```liquid
 <a href="{{ settings.forgerock_logout_url }}">
 ```
 
-```yml
+```http
 https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=YOUR_TREE_NAME&return_to=YOUT_RETURN_TO_URL&ForceAuth=true#login
 ```
 
