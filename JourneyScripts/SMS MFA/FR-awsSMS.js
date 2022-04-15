@@ -57,7 +57,7 @@
       httpMethod: 'POST',
       path: '/',
       get endpoint() {return 'https://sns.' + this.region + '.amazonaws.com/';},
-      get host() { return 'sns.' + this.region + '.amazonaws.co'},
+      get host() { return 'sns.' + this.region + '.amazonaws.com'},
       amzDate: function () { return getAmzDate(new Date().toISOString());},
       get authDate() {return this.amzDate().split('T')[0];},
     };
