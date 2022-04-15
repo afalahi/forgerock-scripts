@@ -207,9 +207,9 @@ We need to whitelist the following classes in Forgerock Access Management
   org.forgerock.util.encode.Base64;
   ```
 
-You may need to add these classes one by one and don't forget to ==save==. Once added you need to restart the AM instance
+You may need to add these classes one by one and don't forget to save. Once added you need to restart the AM instance
 
-> These classes aren't whitelisted in ID Cloud yet
+> You'll have to submit a request to whitelist these classes for ID Cloud
 
 #### Script
 
