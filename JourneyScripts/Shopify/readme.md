@@ -1,8 +1,9 @@
-# Shopify Multipass SSO Scripted Decision Node (Not supported in IDC yet)
+<!-- TOC ignore:true -->
+# Shopify Multipass SSO Scripted Decision Node - Not supported in IDC yet
 
 <!-- TOC -->
 
-- [Shopify Multipass SSO Scripted Decision Node (Not supported in IDC yet)](#shopify-multipass-sso-scripted-decision-node-not-supported-in-idc-yet)
+- [Shopify Multipass SSO Scripted Decision Node - Not supported in IDC yet](#shopify-multipass-sso-scripted-decision-node---not-supported-in-idc-yet)
   - [Summary](#summary)
   - [Setup](#setup)
     - [Shopify Setup](#shopify-setup)
@@ -206,7 +207,9 @@ We need to whitelist the following classes in Forgerock Access Management
   org.forgerock.util.encode.Base64;
   ```
 
-You may need to add these classes one by one and don't forget to save. Once added you need to restart the AM instance
+You may need to add these classes one by one and don't forget to ==save==. Once added you need to restart the AM instance
+
+> These classes aren't whitelisted in ID Cloud yet
 
 #### Script
 
