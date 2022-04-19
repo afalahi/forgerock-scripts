@@ -246,9 +246,19 @@ Create a new Tree in your realm of choice
 
 ## Testing
 
-There isn't much to test with Shopify Multipass, but I've found that decrypting the payload if you're running into issues helps. The code below can decrypt the Multipass token. This is a NodeJS script that relies on the built-in `crypto` library. You'll need to pass your multipass token and secret to the function and it will log the data to the console.
+There isn't much to test with Shopify Multipass, but I've found that decrypting the payload if you're running into issues helps. The code below can decrypt the Multipass token. This is a NodeJS script that relies on the built-in `crypto` library. You'll need to pass your multipass token and secret to the function and it will log the data to the console. If you're using visual studio code, the **code runner extension** will run this snippet inside VS Code
 
 You can retrieve your multipass token from the browser's network view or by logging it to Forgerock's logs
+
+Create your working directory and initiate package.json
+
+```console
+mkdir shopify-testing && cd shopify-testing
+touch decryptMultipass.js
+npm init -y
+```
+
+copy the script to the newly created file, `decryptMultipass.js`
 
 ```js
 const crypto = require('crypto')
@@ -269,3 +279,5 @@ function decryptMultipass(multipassToken, multipassSecret) {
 const decrypted = decryptMultipass(token, secret)
 console.log(decrypted)
 ```
+
+Run the code via VS Code Code runner or `node decryptMultipass.js`
