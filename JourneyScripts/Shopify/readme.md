@@ -17,6 +17,7 @@
       - [Whitelist the Java classes](#whitelist-the-java-classes)
       - [Script](#script)
       - [Tree](#tree)
+  - [Testing](#testing)
 
 <!-- /TOC -->
 
@@ -196,15 +197,16 @@ We need to whitelist the following classes in Forgerock Access Management
 - Add the following Java classes
 
   ```js
-  javax.crypto.Cipher;
-  javax.crypto.Mac;
-  javax.crypto.spec.SecretKeySpec;
-  java.security.MessageDigest;
-  java.lang.String;
-  java.security.SecureRandom;
-  javax.crypto.spec.IvParameterSpec;
-  java.io.ByteArrayOutputStream;
-  org.forgerock.util.encode.Base64;
+  javax.crypto.Cipher
+  javax.crypto.Mac
+  javax.crypto.spec.SecretKeySpec
+  java.security.MessageDigest
+  java.security.MessageDigest$Delegate
+  java.lang.String
+  java.security.SecureRandom
+  javax.crypto.spec.IvParameterSpec
+  java.io.ByteArrayOutputStream
+  org.forgerock.util.encode.Base64
   ```
 
 You may need to add these classes one by one and don't forget to save. Once added you need to restart the AM instance
@@ -241,3 +243,29 @@ Create a new Tree in your realm of choice
 - Connect all Nodes as follows
 
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/journey-view.png)
+
+## Testing
+
+There isn't much to test with Shopify Multipass, but I've found that decrypting the payload if you're running into issues helps. The code below can decrypt the Multipass token. This is a NodeJS script that relies on the built-in `crypto` library. You'll need to pass your multipass token and secret to the function and it will log the data to the console.
+
+You can retrieve your multipass token from the browser's network view or by logging it to Forgerock's logs
+
+```js
+const crypto = require('crypto')
+
+function decryptMultipass(multipassToken, multipassSecret) {
+  const hash = crypto.createHash("sha256").update(multipassSecret).digest();
+  const encryptionKey =  hash.slice(0,16)
+
+  const buffer = Buffer.from(multipassToken, 'base64');
+  const iv = buffer.slice(0, 16)
+  const content = buffer.slice(16, -32)
+
+  const decipher = crypto.createDecipheriv('aes-128-cbc', encryptionKey, iv)
+  const decrypt = decipher.update(content, 'base64', 'utf-8');
+  return (decrypt + decipher.final('utf-8'));
+}
+
+const decrypted = decryptMultipass(token, secret)
+console.log(decrypted)
+```
