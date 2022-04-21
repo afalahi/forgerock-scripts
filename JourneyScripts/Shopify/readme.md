@@ -121,9 +121,8 @@ While still in your store as admin:
 
 - Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This code will check if a user is not logged in and redirect the user to Forgerock and append the previous url to a `return_to` parameter.
 
-  This parameter will instruct Shopify to redirect the user to the original page they were on after a successful authentication
-  
-  We're using `ForceAuth=true` to ensure that a user with a session will not be redirected to their dashboard and instead go through the journey so the script executes
+  - `return_to` : This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. The script will add it to the encrypted JSON token so Shopify can redirect the user back to a specific page, like the cart page. We're setting it dynamically in this example, but can be static
+  - `ForceAuth=true`: We're using it to force a user with a session to run through the Journey anyways to execute the script. The user will not be asked to Authenticate again
 
   ```liquid
   {% if customer.id == null %}
@@ -165,9 +164,6 @@ https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?goto=https://forgerock-poc.myshopify.
 ```
 
 - `YOUR_FORGEROCK_HOSTNAME` = Whatever hostname you gave your deployment. My path has `/openam` in it, yours maybe different. You could be using a fully custom UI as well
-- `YOUR_RETURN_TO_URL` = `https://your-shopify-domain/path`
-  - This is an optional parameter that you can pass to AM and consume it from `requestParameters` in the Script. The script will add it to the encrypted JSON token so Shopify can redirect the user back to a specific page, like the cart page.
-  - _This is set as a static value in this example implementation, but can be dynamic with JS manipulation on the Shopify side. That will not be covered here_
 
 #### Add Urls in Shopify
 
