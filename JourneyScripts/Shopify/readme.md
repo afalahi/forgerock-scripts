@@ -119,11 +119,18 @@ While still in your store as admin:
 
   ![shopify-login-template](/JourneyScripts/Shopify/imgs/store-login-template.png)
 
-- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This will check if a user is not logged in and redirect the user to Forgerock
+- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This code will check if a user is not logged in and redirect the user to Forgerock and append the previous url to a `return_to` parameter. 
+
+  This parameter will instruct Shopify to redirect the user to the original page they were on after a successful authentication
+  
+  We're using `ForceAuth=true` to ensure that a user with a session will not be redirected to their dashboard and instead go through the journey so the script executes
 
   ```liquid
   {% if customer.id == null %}
-  <script>window.location.href="{{ settings.forgerock_login_url }}"</script>
+    <script>
+      var url = '{{ settings.forgerock_login_url }}'
+      window.location.href=  url + '&return_to=' + document.referrer + '&ForceAuth=true#login'
+    </script>
   {% endif %}
   ```
 
@@ -148,10 +155,8 @@ We've created a new config object in Shopify with two properties; `forgerock_log
 ##### Login Url
 
 ```console
-https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=Shopify_MultiPass&return_to=YOUR_RETURN_TO_URL&ForceAuth=true#login
+https://YOUR_FORGEROCK_HOSTNAME/openam/XUI?authIndexType=service&authIndexValue=Shopify_MultiPass
 ```
-
-We're using `ForceAuth=true` to ensure that a user with a session will not be redirected to their dashboard and instead go through the journey so the script executes
 
 ##### Logout Url
 
