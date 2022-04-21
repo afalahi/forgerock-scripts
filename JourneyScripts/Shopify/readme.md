@@ -119,7 +119,7 @@ While still in your store as admin:
 
   ![shopify-login-template](/JourneyScripts/Shopify/imgs/store-login-template.png)
 
-- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This code will check if a user is not logged in and redirect the user to Forgerock and append the previous url to a `return_to` parameter. 
+- Add the following code to the top of the file, right after `{{ 'customer.css' | asset_url | stylesheet_tag }}`. This code will check if a user is not logged in and redirect the user to Forgerock and append the previous url to a `return_to` parameter.
 
   This parameter will instruct Shopify to redirect the user to the original page they were on after a successful authentication
   
