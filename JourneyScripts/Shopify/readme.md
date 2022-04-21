@@ -17,7 +17,9 @@
       - [Whitelist the Java classes](#whitelist-the-java-classes)
       - [Script](#script)
       - [Tree](#tree)
-  - [Testing](#testing)
+  - [Troubleshooting](#troubleshooting)
+    - [Common issues](#common-issues)
+    - [Decryption Script](#decryption-script)
 
 <!-- /TOC -->
 
@@ -237,6 +239,7 @@ Create a new Tree in your realm of choice
   - Name: **Shopify_MultiPass**
   - Add `Username Collector` Node or `Platform Username` node. This depends on your deployment
   - Add `Password Collector` Node or `Platform Password` Node. This depends on your deployment
+    - If your deployment is platform based and you're using UUIDs for usernames, then you need `Identify Existing User` Node after collecting the username and password so `_id` is added to sharedState
   - Add `Scripted Decision` Node and choose our newly created Script
     - Change the Node name to **Shopify Multipass**
     - Add `true` in the Outcomes field
@@ -244,9 +247,20 @@ Create a new Tree in your realm of choice
 
   ![Shopify SSO Tree](/JourneyScripts/Shopify/imgs/journey-view.png)
 
-## Testing
+## Troubleshooting
 
-There isn't much to test with Shopify Multipass, but I've found that decrypting the payload if you're running into issues helps. The code below can decrypt the Multipass token. This is a NodeJS script that relies on the built-in `crypto` library. You'll need to pass your multipass token and secret to the function and it will log the data to the console. If you're using visual studio code, the **code runner extension** will run this snippet inside VS Code
+There isn't much to test with Shopify Multipass, but I've found that decrypting the payload if you're running into issues helps.
+
+### Common issues
+
+- Invalid Multipass Request, in my experience this occurs in two occasion
+  - Wrong encryption key, IV
+  - IP v6 in your Multipass token
+- Invalid email, this occurs if your email lookup in the script is misconfigured
+
+### Decryption Script
+
+The code below can decrypt the Multipass token. This is a NodeJS script that relies on the built-in `crypto` library. You'll need to pass your multipass token and secret to the function and it will log the data to the console. If you're using visual studio code, the **code runner extension** will run this snippet inside VS Code
 
 You can retrieve your multipass token from the browser's network view or by logging it to Forgerock's logs
 
