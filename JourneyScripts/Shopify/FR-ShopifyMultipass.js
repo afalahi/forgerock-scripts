@@ -29,10 +29,18 @@
   var multipassSecret = '';
   var shopifyDomain = '';
 
+  /**
+   * @username - Used for StandAlone AM deployment
+   * @id - Used for platform/cloud deployment (cloud requires class whitelist request)
+   */
+
+  var username = sharedState.get('username');
+  var id = sharedState.get('_id');
+
   //You'll need to wrap idpRepository in the JS String interface or else you'll get an error: Access to Java class \"java.lang.Class\" is prohibited
   //additional properties: https://shopify.dev/api/multipass#2-encode-your-customer-information-using-json
   var shopifyToken = {
-    email: String(idRepository.getAttribute(sharedState.get('username'), 'mail').toArray()[0]),
+    email: String(idRepository.getAttribute(username, 'mail').toArray()[0]),
     created_at: new Date().toISOString()
   };
   if(requestParameters.get('return_to') && String(requestParameters.get('return_to').get(0))) {
