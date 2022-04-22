@@ -10,17 +10,7 @@
 
 // Drop in library for fast client side script writing
 // outcomes 'true' or 'false'
-function clientSideScript(t) {
-  var i = JavaImporter(
-    org.forgerock.openam.auth.node.api.Action,
-    com.sun.identity.authentication.callbacks.ScriptTextOutputCallback
-  );
-  callbacks.isEmpty()
-    ? (action = i.Action.send(
-        new i.ScriptTextOutputCallback(t.toString() + ' ' + t.name + '()')
-      ).build())
-    : (action = i.Action.goTo((!0).toString()).build());
-}
+
 var ATTRIB = 'labeledURI';
 var IDM_ATTRIB = 'profileImage';
 var IMGBB_KEY = '781eb986d3015f8ea6fea8259ce868c0';
